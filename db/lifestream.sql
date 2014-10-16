@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 16, 2014 at 04:09 PM
+-- Generation Time: Oct 16, 2014 at 05:07 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `lifestream` (
   `fk_users_id` int(11) unsigned NOT NULL,
   `s_lifestream` text COLLATE utf8_unicode_ci NOT NULL,
   `s_picture` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
-  `t_post` date NOT NULL,
+  `t_post` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `e_category` enum('status','album','blog','notes') COLLATE utf8_unicode_ci NOT NULL,
   `b_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

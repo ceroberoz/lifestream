@@ -10,14 +10,14 @@ class Lifestream extends CI_Model
 
 		$img 	= $this->upload->data();
 		$picture= $img['file_name'];
-		$date 	= date('Y-m-d');
+		//$date 	= date('Y-m-d');
 
 		$data = array(
 			'fk_users_id' 	=> $uid,
 			's_lifestream' 	=> $stream,
 			'e_category' 	=> $cats,
-			's_picture'		=> $picture,
-			't_post'		=> $date
+			's_picture'		=> $picture
+			//'t_post'		=> $date
 			);
 
 		$this->db->insert('lifestream',$data);
