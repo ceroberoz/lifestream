@@ -138,7 +138,12 @@
               <h2><a href="#"><?php echo $stream->username;?></a> <span>posted a <?php echo $stream->e_category;?> update</span></h2>
               <p><?php echo $stream->s_lifestream;?></p>
               <?php if($stream->s_picture){;?>
-              <p><img class="img-responsive" src="<?php echo base_url();?>uploads/image/<?php echo $stream->s_picture;?>"></p>
+              <?php
+                $img_src = 'uploads/image/'.$stream->s_picture;
+                $width = 848;
+                $height = 480;
+              ?>
+              <p><img class="img-responsive" src="<?php echo base_url('/uploads/image/'. thumb($img_src, $width, $height)); ?>"></p>
               <?php };?>
             </div>
           </div>
