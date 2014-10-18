@@ -216,8 +216,12 @@
             </div>
             <div class="timeline-label">
               <h2>
-                <a href="#"><?php echo $stream->username;?></a> <span>posted a <?php echo $stream->e_category;?> update</span><small class="pull-right">
-                <a href="#" data-toggle="modal" data-target="#editModal-<?php echo $stream->pk_stream_id;?>">edit</a> | <a href="#" data-toggle="modal" data-target="#deleteModal-<?php echo $stream->pk_stream_id;?>">delete</a></small>
+                <a href="#"><?php echo $stream->username;?></a> <span>posted a <?php echo $stream->e_category;?> update</span>
+                <?php if($this->ion_auth->logged_in()){;?>
+                <small class="pull-right">
+                  <a href="#" data-toggle="modal" data-target="#editModal-<?php echo $stream->pk_stream_id;?>">edit</a> | <a href="#" data-toggle="modal" data-target="#deleteModal-<?php echo $stream->pk_stream_id;?>">delete</a>
+                </small>
+                <?php } ;?>
               </h2>
               <p><?php echo $stream->s_lifestream;?></p>
               <?php if($stream->s_picture){;?>
