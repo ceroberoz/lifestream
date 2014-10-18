@@ -39,4 +39,35 @@ class Lifestream extends CI_Model
 			return array();
 		}
 	}
+
+	function editStream()
+	{
+		$uid 	= $this->ion_auth->users()->row()->id;
+		$sid 	= $this->input->post('sid');
+		$stream = $this->input->post('ls_lifestream');
+		$cats 	= $this->input->post('ls_category');
+
+		$img 	= $this->upload->data();
+		$picture= $img['file_name'];
+
+		$data = array(
+			's_lifestream' 	=> $stream,
+			'e_category' 	=> $cats,
+			's_picture'		=> $picture
+			);
+
+		$this->db->where('fk_users_id',$uid)
+				 ->where('pk_stream_id',$sid)
+				 ->update('lifestream',$data);
+	}
+
+	function deleteStream()
+	{
+		$uid 	= $this->ion_auth->users()->row()->id;
+		$sid 	= $this->input->post('sid');
+
+		$this->db->where('fk_users_id',$uid)
+				 ->where('pk_stream_id',$sid)
+				 ->delete('lifestream');
+	}
 }

@@ -20,7 +20,7 @@ class Home extends CI_Controller {
 		$this->load->view('minime/login');
 	}
 
-	function post_stream()
+	function post()
 	{
 		// do upload image
 		$config = array(
@@ -39,6 +39,45 @@ class Home extends CI_Controller {
 		$this->lifestream->addStream();
 
 		// redirect
+		redirect('/','refresh');
+	}
+
+	function edit()
+	{
+		// do upload image
+		$config = array(
+			'upload_path' 	=> './uploads/image/',
+			'allowed_types' => 'jpg|png',
+			'encrypt_name'	=> TRUE,
+			'max_size'		=> 2048
+			);
+
+		$this->load->library('upload');
+		$this->upload->initialize($config);
+		$this->upload->do_upload();
+
+		// add text to db
+		$this->load->model('lifestream');
+		$this->lifestream->editStream();
+
+		// redirect
+		redirect('/','refresh');
+	}
+
+	function delete()
+	{
+		//remove pictures from directory
+		$filename 	= $this->input->post('ls_picture');
+		$withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $filename);
+		$path 		= './uploads/image/'.$withoutExt;
+
+
+		foreach (glob($path."*.*") as $filename) {
+		    unlink($filename);
+		}
+
+		//remove from db
+		$this->lifestream->deleteStream();
 		redirect('/','refresh');
 	}
 }

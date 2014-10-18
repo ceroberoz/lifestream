@@ -22,8 +22,8 @@
   <body>
 
   <?php if($this->ion_auth->logged_in()){;?>
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <!-- Modal Post -->
+  <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -31,7 +31,7 @@
           <h4 class="modal-title" id="myModalLabel">Add a lifestream</h4>
         </div>
         <div class="modal-body">
-          <?php echo form_open_multipart('home/post_stream');?>
+          <?php echo form_open_multipart('home/post');?>
             <fieldset>
             <div class="form-group">
               <textarea name="ls_lifestream" id="editor1" rows="10" cols="80">
@@ -96,7 +96,7 @@
           <li><a href="auth/logout">Logout</a></li>
           <li>
             <form>
-              <a href="#" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#myModal">
+              <a href="#" class="btn btn-success navbar-btn" data-toggle="modal" data-target="#postModal">
                 <i class="fa fa-plus"></i> 
               </a>
             </form>
@@ -129,13 +129,96 @@
     <div class="col-md-7">
       <div class="timeline-centered">
         <?php foreach($streams as $stream):?>
+
+          <?php if($this->ion_auth->logged_in()){;?>
+          <!-- Modal  Edit -->
+          <div class="modal fade" id="editModal-<?php echo $stream->pk_stream_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Edit lifestream</h4>
+                </div>
+                <div class="modal-body">
+                  <?php echo form_open_multipart('home/edit');?>
+                  <?php echo form_hidden('sid', $stream->pk_stream_id);?>
+                    <fieldset>
+                    <div class="form-group">
+                      <textarea name="ls_lifestream" id="editor-<?php echo $stream->pk_stream_id;?>" rows="10" cols="80"><?php echo $stream->s_lifestream;?>
+                      </textarea>
+                      <script>
+                          // Replace the <textarea id="editor1"> with a CKEditor
+                          // instance, using default configuration.
+                          CKEDITOR.replace( 'editor-<?php echo $stream->pk_stream_id;?>' );
+                      </script> 
+                    </div>
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                    <!-- <label class="col-md-4 control-label" for="ls_category">Select Category</label> -->
+                      <div class="col-md-4">
+                        <label><small>Select category</small></label>
+                        <select id="ls_category" name="ls_category" class="form-control">
+                          <option value="status">Status</option>
+                          <option value="notes">Notes</option>
+                        </select>
+                      </div>
+
+
+                      <!-- File Button --> 
+                      <div class="col-md-4">
+                        <label><small>Upload file</small></label>
+                        <input id="filebutton" name="userfile" class="input-file" type="file">
+                        <?php if($stream->s_picture){ ;?>
+                          <p><?php echo $stream->s_picture;?> | <a href="#">[x]</a></p>
+                        <?php } ;?>
+                      </div>
+                    </div>
+
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                  <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+                <?php echo form_close();?>
+              </div>
+            </div>
+          </div>
+
+          <!-- delete modal -->
+           <div class="modal fade" id="deleteModal-<?php echo $stream->pk_stream_id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Delete stream</h4>
+                </div>
+                <div class="modal-body">
+                  <?php echo form_open_multipart('home/delete');?>
+                  <?php echo form_hidden('sid', $stream->pk_stream_id);?>
+                  <?php echo form_hidden('ls_picture', $stream->s_picture);?>
+                  Do you really want to delete stream? This action can't be undone.
+                </div>
+                <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                  <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+                <?php echo form_close();?>
+              </div>
+            </div>
+          </div>
+          <?php };?>
+
         <article class="timeline-entry">
           <div class="timeline-entry-inner">
             <div class="timeline-icon <?php if($stream->e_category == "status"){ echo "bg-success";} else { echo "bg-warning";};?>">
               <i class="entypo-feather"></i>
             </div>
             <div class="timeline-label">
-              <h2><a href="#"><?php echo $stream->username;?></a> <span>posted a <?php echo $stream->e_category;?> update</span></h2>
+              <h2>
+                <a href="#"><?php echo $stream->username;?></a> <span>posted a <?php echo $stream->e_category;?> update</span><small class="pull-right">
+                <a href="#" data-toggle="modal" data-target="#editModal-<?php echo $stream->pk_stream_id;?>">edit</a> | <a href="#" data-toggle="modal" data-target="#deleteModal-<?php echo $stream->pk_stream_id;?>">delete</a></small>
+              </h2>
               <p><?php echo $stream->s_lifestream;?></p>
               <?php if($stream->s_picture){;?>
               <?php
