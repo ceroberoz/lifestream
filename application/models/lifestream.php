@@ -7,6 +7,7 @@ class Lifestream extends CI_Model
 		$uid 	= $this->ion_auth->users()->row()->id;
 		$stream = $this->input->post('ls_lifestream');
 		$cats 	= $this->input->post('ls_category');
+		$title 	= $this->input->post('ls_title');
 
 		$img 	= $this->upload->data();
 		$picture= $img['file_name'];
@@ -16,7 +17,8 @@ class Lifestream extends CI_Model
 			'fk_users_id' 	=> $uid,
 			's_lifestream' 	=> $stream,
 			'e_category' 	=> $cats,
-			's_picture'		=> $picture
+			's_picture'		=> $picture,
+			's_title'		=> $title
 			//'t_post'		=> $date
 			);
 
@@ -46,6 +48,7 @@ class Lifestream extends CI_Model
 		$sid 	= $this->input->post('sid');
 		$stream = $this->input->post('ls_lifestream');
 		$cats 	= $this->input->post('ls_category');
+		$title 	= $this->input->post('ls_title');
 
 		$img 	= $this->upload->data();
 		$picture= $img['file_name'];
@@ -53,7 +56,8 @@ class Lifestream extends CI_Model
 		$data = array(
 			's_lifestream' 	=> $stream,
 			'e_category' 	=> $cats,
-			's_picture'		=> $picture
+			's_picture'		=> $picture,
+			's_title'		=> $title
 			);
 
 		$this->db->where('fk_users_id',$uid)
@@ -69,5 +73,19 @@ class Lifestream extends CI_Model
 		$this->db->where('fk_users_id',$uid)
 				 ->where('pk_stream_id',$sid)
 				 ->delete('lifestream');
+	}
+
+	function deletePicture()
+	{
+		$uid 	= $this->ion_auth->users()->row()->id;
+		$sid 	= $this->uri->segment(3);
+
+		$data	= array(
+			's_picture' => ''
+			);
+
+		$this->db->where('fk_users_id',$uid)
+				 ->where('pk_stream_id',$sid)
+				 ->update('lifestream',$data);
 	}
 }

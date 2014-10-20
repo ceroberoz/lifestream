@@ -12,12 +12,12 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$data['streams'] = $this->lifestream->getStreams();
-		$this->load->view('minime/home',$data);
+		$this->load->view('lifestream/home',$data);
 	}
 
 	function login()
 	{
-		$this->load->view('minime/login');
+		$this->load->view('lifestream/login');
 	}
 
 	function post()
@@ -78,6 +78,23 @@ class Home extends CI_Controller {
 
 		//remove from db
 		$this->lifestream->deleteStream();
+		redirect('/','refresh');
+	}
+
+	function delete_picture()
+	{
+		//remove pictures from directory
+		$filename 	= $this->input->post('ls_picture');
+		$withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $filename);
+		$path 		= './uploads/image/'.$withoutExt;
+
+
+		foreach (glob($path."*.*") as $filename) {
+		    unlink($filename);
+		}
+
+		//remove from db
+		$this->lifestream->deletePicture();
 		redirect('/','refresh');
 	}
 }
