@@ -2,6 +2,110 @@
 
 class Lifestream extends CI_Model
 {
+	// project functions
+	function addProject()
+	{
+		$uid 	= $this->ion_auth->users()->row()->id;
+		$title 	= $this->input->post('p_title');
+		$desc 	= $this->input->post('p_description');
+		$client = $this->input->post('p_client');
+		$cats 	= $this->input->post('p_category');
+		$status = $this->input->post('p_status');
+		$t_start= $this->input->post('p_time_start');
+		$t_end 	= $this->input->post('p_time_end');
+
+		$img 	= $this->upload->data();
+		$picture= $img['file_name'];
+
+		$data = array(
+			'fk_users_id' 	=> $uid,
+			's_title' 		=> $title,
+			's_description' => $desc,
+			's_picture' 	=> $picture,
+			's_client'		=> $client,
+			'e_category'	=> $cats,
+			'e_status'		=> $status,
+			'b_start_date' 	=> $t_start,
+			'b_end_date'	=> $t_end
+			);
+
+		$this->db->insert('project',$data);
+	}
+
+	function getProjects()
+	{
+		$this->db->select('*')
+				 ->from('project')
+				 ->join('users','users.id = project.fk_users_id')
+				 ->where('b_status','1');
+
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			return $query->result();
+		}
+		else{
+			return array();
+		}
+	}
+
+	function editProject()
+	{
+		$uid 	= $this->ion_auth->users()->row()->id;
+		$pid 	= $this->input->post('p_id');
+		$title 	= $this->input->post('p_title');
+		$desc 	= $this->input->post('p_description');
+		$client = $this->input->post('p_client');
+		$cats 	= $this->input->post('p_category');
+		$status = $this->input->post('p_status');
+		$t_start= $this->input->post('p_time_start');
+		$t_end 	= $this->input->post('p_time_end');
+
+		$img 	= $this->upload->data();
+		$picture= $img['file_name'];
+
+		$data = array(
+			'fk_users_id' 	=> $uid,
+			's_title' 		=> $title,
+			's_description' => $desc,
+			's_picture' 	=> $picture,
+			's_client'		=> $client,
+			'e_category'	=> $cats,
+			'e_status'		=> $status,
+			'b_start_date' 	=> $t_start,
+			'b_end_date'	=> $t_end
+			);
+
+		$this->db->where('fk_users_id',$uid)
+				 ->where('pk_project_id',$pid)
+				 ->update('project',$data);
+	}
+
+	function deleteProject()
+	{
+		$uid 	= $this->ion_auth->users()->row()->id;
+		$pid 	= $this->input->post('p_id');
+
+		$this->db->where('fk_users_id',$uid)
+				 ->where('pk_project_id',$pid)
+				 ->delete('project');
+	}
+
+	function deleteProjectPicture()
+	{
+		$uid 	= $this->ion_auth->users()->row()->id;
+		$pid 	= $this->uri->segment(3);
+
+		$data	= array(
+			's_picture' => ''
+			);
+
+		$this->db->where('fk_users_id',$uid)
+				 ->where('pk_project_id',$pid)
+				 ->update('project',$data);
+	}
+
+	// stream functions
 	function addStream()
 	{
 		$uid 	= $this->ion_auth->users()->row()->id;
@@ -11,7 +115,6 @@ class Lifestream extends CI_Model
 
 		$img 	= $this->upload->data();
 		$picture= $img['file_name'];
-		//$date 	= date('Y-m-d');
 
 		$data = array(
 			'fk_users_id' 	=> $uid,
@@ -19,7 +122,6 @@ class Lifestream extends CI_Model
 			'e_category' 	=> $cats,
 			's_picture'		=> $picture,
 			's_title'		=> $title
-			//'t_post'		=> $date
 			);
 
 		$this->db->insert('lifestream',$data);

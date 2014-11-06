@@ -28,13 +28,13 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title" id="myModalLabel">Add a lifestream</h4>
+          <h4 class="modal-title" id="myModalLabel">Add a project</h4>
         </div>
         <div class="modal-body">
-          <?php echo form_open_multipart('home/post');?>
+          <?php echo form_open_multipart('project/post');?>
             <fieldset>
             <div class="form-group">
-              <input name="ls_title" type="text" class="form-control" placeholder="Post Title">
+              <input name="ls_title" type="text" class="form-control" placeholder="Project Title">
             </div>
             <div class="form-group">
               <textarea name="ls_lifestream" id="editor1" rows="10" cols="80">
@@ -47,19 +47,9 @@
             </div>
             <!-- Select Basic -->
             <div class="form-group">
-            <!-- <label class="col-md-4 control-label" for="ls_category">Select Category</label> -->
-              <div class="col-md-4">
-                <label><small>Select category</small></label>
-                <select id="ls_category" name="ls_category" class="form-control">
-                  <option value="status">Status</option>
-                  <option value="notes">Notes</option>
-                </select>
-              </div>
-
-
               <!-- File Button --> 
               <div class="col-md-4">
-                <label><small>Upload file</small></label>
+                <label><small>Upload Picture</small></label>
                 <input id="filebutton" name="userfile" class="input-file" type="file">
               </div>
             </div>
@@ -112,127 +102,24 @@
 
 <div class="container">
   <div class="row starter-template">
-      <ul class="thumbnails list-unstyled">
-        <li class="col-md-3">
-          <div class="thumbnail" style="padding: 0">
-            <div style="padding:4px">
-              <img alt="300x200" style="width: 100%" src="http://placehold.it/200x150">
-            </div>
-            <div class="caption">
-              <h2>Project A</h2>
-              <p>My project description</p>
-              <p><i class="icon icon-map-marker"></i> Place, Country</p>
-            </div>
-            <div class="modal-footer" style="text-align: left">
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                    <span class="sr-only">60% Complete</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4"><b>60%</b><br/><small>FUNDED</small></div>
-                <div class="col-md-4"><b>$400</b><br/><small>PLEDGED</small></div>
-                <div class="col-md-4"><b>18</b><br/><small>DAYS</small></div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="col-md-3">
-          <div class="thumbnail" style="padding: 0">
-            <div style="padding:4px">
-              <img alt="300x200" style="width: 100%" src="http://placehold.it/200x150">
-            </div>
-            <div class="caption">
-              <h2>Project B</h2>
-              <p>My project description</p>
-              <p><i class="icon icon-map-marker"></i> Place, Country</p>
-            </div>
-            <div class="modal-footer" style="text-align: left">
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                    <span class="sr-only">60% Complete</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4"><b>250%</b><br/><small>FUNDED</small></div>
-                <div class="col-md-4"><b>$50000</b><br/><small>PLEDGED</small></div>
-                <div class="col-md-4"><b>FUNDED</b><br/><small>AUG 5</small></div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="col-md-3">
-        <div class="thumbnail" style="padding: 0">
-          <div style="padding:4px">
-            <img alt="300x200" style="width: 100%" src="http://placehold.it/200x150">
-          </div>
-          <div class="caption">
-            <h2>Project C</h2>
-            <p>My project description</p>
-            <p><i class="icon icon-map-marker"></i> Place, Country</p>
-          </div>
-          <div class="modal-footer" style="text-align: left">
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-                    <span class="sr-only">60% Complete</span>
-                </div>
-              </div>
-            <div class="row">
-              <div class="col-md-4"><b>30%</b><br/><small>FUNDED</small></div>
-              <div class="col-md-4"><b>$1000</b><br/><small>PLEDGED</small></div>
-              <div class="col-md-4"><b>NOT FUNDED</b><br/><small></small></div>
-            </div>
-          </div>
-        </div>
-      </li>
+    <ul class="thumbnails list-unstyled">
+      <?php foreach($projects as $project):?>
       <li class="col-md-3">
         <div class="thumbnail" style="padding: 0">
           <div style="padding:4px">
             <img alt="300x200" style="width: 100%" src="http://placehold.it/200x150">
           </div>
           <div class="caption">
-            <h2>Project C</h2>
+            <h2>Project A</h2>
             <p>My project description</p>
             <p><i class="icon icon-map-marker"></i> Place, Country</p>
           </div>
           <div class="modal-footer" style="text-align: left">
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-                    <span class="sr-only">60% Complete</span>
-                </div>
-              </div>
-            <div class="row">
-              <div class="col-md-4"><b>30%</b><br/><small>FUNDED</small></div>
-              <div class="col-md-4"><b>$1000</b><br/><small>PLEDGED</small></div>
-              <div class="col-md-4"><b>NOT FUNDED</b><br/><small></small></div>
-            </div>
+            <label>Project</label><br><small>from 12 June to 14 July 2012</small>
           </div>
         </div>
       </li>
-      <li class="col-md-3">
-        <div class="thumbnail" style="padding: 0">
-          <div style="padding:4px">
-            <img alt="300x200" style="width: 100%" src="http://placehold.it/200x150">
-          </div>
-          <div class="caption">
-            <h2>Project C</h2>
-            <p>My project description</p>
-            <p><i class="icon icon-map-marker"></i> Place, Country</p>
-          </div>
-          <div class="modal-footer" style="text-align: left">
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-                    <span class="sr-only">60% Complete</span>
-                </div>
-              </div>
-            <div class="row">
-              <div class="col-md-4"><b>30%</b><br/><small>FUNDED</small></div>
-              <div class="col-md-4"><b>$1000</b><br/><small>PLEDGED</small></div>
-              <div class="col-md-4"><b>NOT FUNDED</b><br/><small></small></div>
-            </div>
-          </div>
-        </div>
-      </li>
+      <?php endforeach;?>
     </ul>
   </div>
   <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Click to return on the top page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>

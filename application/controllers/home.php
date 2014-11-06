@@ -35,7 +35,6 @@ class Home extends CI_Controller {
 		$this->upload->do_upload();
 
 		// add text to db
-		$this->load->model('lifestream');
 		$this->lifestream->addStream();
 
 		// redirect
@@ -57,7 +56,6 @@ class Home extends CI_Controller {
 		$this->upload->do_upload();
 
 		// add text to db
-		$this->load->model('lifestream');
 		$this->lifestream->editStream();
 
 		// redirect

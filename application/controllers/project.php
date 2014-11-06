@@ -11,14 +11,8 @@ class Project extends CI_Controller {
 
 	public function index()
 	{
-		//$data['streams'] = $this->lifestream->getStreams();
-		//$this->load->view('lifestream/home',$data);
-		$this->load->view('lifestream/project');
-	}
-
-	function login()
-	{
-		$this->load->view('lifestream/login');
+		$data['projects'] = $this->lifestream->getProjects();
+		$this->load->view('lifestream/project',$data);
 	}
 
 	function post()
@@ -36,11 +30,10 @@ class Project extends CI_Controller {
 		$this->upload->do_upload();
 
 		// add text to db
-		$this->load->model('lifestream');
 		$this->lifestream->addStream();
 
 		// redirect
-		redirect('/','refresh');
+		redirect('project','refresh');
 	}
 
 	function edit()
@@ -58,17 +51,16 @@ class Project extends CI_Controller {
 		$this->upload->do_upload();
 
 		// add text to db
-		$this->load->model('lifestream');
-		$this->lifestream->editStream();
+		$this->lifestream->editProject();
 
 		// redirect
-		redirect('/','refresh');
+		redirect('project','refresh');
 	}
 
 	function delete()
 	{
 		//remove pictures from directory
-		$filename 	= $this->input->post('ls_picture');
+		$filename 	= $this->input->post('p_picture');
 		$withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $filename);
 		$path 		= './uploads/image/'.$withoutExt;
 
@@ -78,14 +70,14 @@ class Project extends CI_Controller {
 		}
 
 		//remove from db
-		$this->lifestream->deleteStream();
-		redirect('/','refresh');
+		$this->lifestream->deleteProject();
+		redirect('project','refresh');
 	}
 
 	function delete_picture()
 	{
 		//remove pictures from directory
-		$filename 	= $this->input->post('ls_picture');
+		$filename 	= $this->input->post('p_picture');
 		$withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $filename);
 		$path 		= './uploads/image/'.$withoutExt;
 
@@ -95,7 +87,7 @@ class Project extends CI_Controller {
 		}
 
 		//remove from db
-		$this->lifestream->deletePicture();
-		redirect('/','refresh');
+		$this->lifestream->deleteProjectPicture();
+		redirect('project','refresh');
 	}
 }
